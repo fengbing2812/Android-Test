@@ -1,0 +1,70 @@
+from appium import webdriver
+from appium.webdriver.common.touch_action import TouchAction
+import os
+from appium.webdriver.common.touch_action import TouchAction
+import time
+desired_caps={}
+desired_caps['platformName'] = 'Android'
+desired_caps['deviceName'] = 'OPPO reno'
+desired_caps['udid'] = '6f297c99'
+#desired_caps['app']=r"D:\My Documents\Desktop\pylx\com.baidu.searchbox.apk"
+desired_caps['platformVersion'] = '10'
+desired_caps['appPackage'] ='com.coloros.filemanager'
+desired_caps['appActivity'] = 'com.coloros.filemanager.Main'
+#desired_caps['unicodeKeyboard']=True
+#desired_caps['resetKeyboard']=True
+desired_caps['noReset']=True
+desired_caps['newCommandTimeout']=6000  #与appium链接时间6千秒
+
+
+def getSize():
+    x = driver.get_window_size()['width']
+    y = driver.get_window_size()['height']
+    return (x, y)
+def swipeUp(t):
+    l = getSize()
+    x1 = int(l[0] * 0.5)    #x坐标
+    y1 = int(l[1] * 0.75)   #起始y坐标
+    y2 = int(l[1] * 0.25)   #终点y坐标
+    driver.swipe(x1, y1, x1, y2,t)
+
+def swipeDown(t):
+    l = getSize()
+    x1 = int(l[0] * 0.5)  #x坐标
+    y1 = int(l[1] * 0.25)   #起始y坐标
+    y2 = int(l[1] * 0.75)   #终点y坐标
+    driver.swipe(x1, y1, x1, y2,t)
+
+def swipright(t):
+    l=getSize()
+    x1=int(l[0]*0.95)
+    y1=int(l[1]*0.5)
+    x2=int(l[0]*0.05)
+    driver.swipe(x1,y1,x2,y1,t)
+
+
+def swipLeft (t):
+    l= getSize()
+    x1=int(l[0]*0.05)
+    y1=int(l[1]*0.5)
+    x2=int(l[0]*0.95)
+    driver.swipe(x1,y1,x2,y1,t)
+
+
+
+driver=webdriver.Remote(r'http://localhost:4723/wd/hub',desired_caps)
+driver.implicitly_wait(10)
+
+for one in range(10):
+    try:
+        driver.find_element_by_android_uiautomator('new UiSelector().text("图片")').click()
+        driver.find_element_by_android_uiautomator('new UiSelector().text("相机")').click()
+        time.sleep(1)
+        for a in range(10):
+            swipeUp(1000)
+        time.sleep(1)
+        for b in range(10):
+
+            swipeDown(1000)
+    except:
+        print("第一条用例file")
